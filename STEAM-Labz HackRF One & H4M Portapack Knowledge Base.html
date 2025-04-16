@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEAM-Labz HackRF One & H4M Portapack Knowledge Base</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .header-gradient {
+            background: linear-gradient(90deg, #1a237e 0%, #283593 100%);
+        }
+        .section-header {
+            border-bottom: 2px solid #3949ab;
+            padding-bottom: 0.5rem;
+        }
+        .sidebar-link {
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            border-left: 3px solid #3949ab;
+            background-color: rgba(63, 81, 181, 0.1);
+        }
+        .chatbot-container {
+            border-top: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        .chatbot-message {
+            max-width: 80%;
+            border-radius: 1rem;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            border-top-right-radius: 0;
+        }
+        .bot-message {
+            background-color: #f5f5f5;
+            border-top-left-radius: 0;
+        }
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f0f0f0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        details summary {
+            cursor: pointer;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .device-image {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card {
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        #chatbot-toggle {
+            transition: all 0.3s ease;
+        }
+        #toc-container li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="header-gradient text-white py-6 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl md:text-3xl font-bold">STEAM-Labz HackRF & H4M Portapack</h1>
+            <div class="flex items-center space-x-4">
+                <button id="toc-button" class="px-3 py-2 bg-white bg-opacity-20 rounded hover:bg-opacity-30 transition">
+                    <i class="fas fa-list mr-1"></i> Contents
+                </button>
+                <button id="chatbot-toggle" class="px-3 py-2 bg-indigo-700 rounded hover:bg-indigo-600 transition">
+                    <i class="fas fa-comment-alt mr-1"></i> Ask a Question
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Table of Contents Sidebar (Hidden by default on mobile) -->
+    <div id="toc-sidebar" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" style="backdrop-filter: blur(2px);">
+        <div class="h-full w-64 md:w-80 bg-white p-4 overflow-y-auto shadow-lg animate__animated animate__slideInLeft">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-indigo-900">Contents</h2>
+                <button id="toc-close" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul id="toc-container" class="space-y-1">
+                <!-- Will be populated by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <section id="introduction" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Introduction</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="mb-4">Welcome to the comprehensive knowledge base for STEAM-Labz's HackRF One and H4M Portapack - your definitive guide to mastering these powerful Software Defined Radio (SDR) tools. Whether you're a beginner or an experienced RF engineer, this knowledge base provides everything you need to understand, configure, and utilize these devices to their full potential.</p>
+                        <p class="mb-4">The HackRF One is an open-source hardware platform that can be used as a USB peripheral or programmed for stand-alone operation. It's capable of transmission or reception of radio signals from 1 MHz to 6 GHz, making it an incredibly versatile tool for RF exploration and development.</p>
+                        <p>The H4M Portapack extends the HackRF One with a touchscreen interface, controls, and additional features that transform it into a portable, standalone device for signal analysis and transmission - no computer required.</p>
+                    </div>
+                    <div class="flex justify-center items-center">
+                        <img src="https://ae01.alicdn.com/kf/Sf6853647d70541598a683e93c9fdf214t.jpg" alt="H4M Portapack with HackRF One" class="device-image max-w-full h-auto">
+                    </div>
+                </div>
+            </section>
+
+            <section id="hardware-overview" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Hardware Overview</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">HackRF One Specifications</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border">
+                            <tbody>
+                                <tr>
+                                    <td class="font-medium">Frequency Range</td>
+                                    <td>1 MHz to 6 GHz operating frequency</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Operation Mode</td>
+                                    <td>Half-duplex transceiver</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Sample Rate</td>
+                                    <td>Up to 20 million samples per second</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Resolution</td>
+                                    <td>8-bit quadrature samples (8-bit I and 8-bit Q)</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Interface</td>
+                                    <td>USB 2.0 High Speed</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Power</td>
+                                    <td>USB powered or external source</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Antenna Port</td>
+                                    <td>SMA female connector</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Antenna Port Power</td>
+                                    <td>50 mA at 3.3 V DC (optional)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">H4M Portapack Specifications</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border">
+                            <tbody>
+                                <tr>
+                                    <td class="font-medium">Display</td>
+                                    <td>3.2 Inch 240x320 Matte LCD Touch Screen</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Controls</td>
+                                    <td>Arrow Keys, 360-degree Rotary Wheel (flat design), Select Buttons</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Audio</td>
+                                    <td>Built-in speaker, 3.5mm headphone/microphone jack, Built-in microphone with toggle switch</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Storage</td>
+                                    <td>MicroSD Card Slot for data import/export</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Battery</td>
+                                    <td>Rechargeable battery with advanced management IC and status display</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Case</td>
+                                    <td>Translucent ABS injection molded shell</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Power</td>
+                                    <td>Single power on/off switch, USB-C charging</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Connectivity</td>
+                                    <td>GPIO port for custom add-ons</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-indigo-800 mb-3">H4M Portapack Improvements</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li><strong>Single power on/off switch</strong> - When powered off, the battery will no longer phantom drain</li>
+                            <li><strong>Advanced battery management IC</strong> - Easy to check battery level, voltage, and current draw</li>
+                            <li><strong>Matte screen</strong> - Better visibility in sunny outdoor environments</li>
+                            <li><strong>360-degree Knob Button</strong> - Flat design inspired by iPod click wheel for improved usability</li>
+                            <li><strong>GPIO port</strong> - Allows users to create their own add-ons and extensions</li>
+                            <li><strong>Improved charge speeds</strong> - Faster charging via USB-C</li>
+                            <li><strong>Built-in microphone with toggle</strong> - Switch between built-in mic and headphone microphone</li>
+                            <li><strong>Automatic audio switching</strong> - Automatically switches between speaker and headphones</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-indigo-800 mb-3">What's Included</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>1x PortaPack H4M (HackRF Rev10 + PortaPack H4M)</li>
+                            <li>1x MicroUSB Cable</li>
+                            <li>1x 20dB 50MHz - 6GHz LNA</li>
+                            <li>1x SMA Male/Male Cable</li>
+                            <li>1x 2.4/5/5.8GHz Blade Antenna</li>
+                            <li>1x GSM/3G/4G Antenna</li>
+                            <li>1x 40MHz - 6GHz Telescopic Antenna</li>
+                            <li>1x 700MHz - 2700MHz Antenna</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Key Features</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <!-- Signal Capture -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-broadcast-tower text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Signal Capture</h3>
+                        <p>Easily perform raw signal capture for instant replay or offline analysis. Perfect for documenting and studying RF signals in your environment.</p>
+                    </div>
+                    
+                    <!-- Signal Replay -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-redo-alt text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Signal Replay</h3>
+                        <p>Organize and replay raw signals - directly after capture, from the SD card or from other sources for testing and verification.</p>
+                    </div>
+                    
+                    <!-- Signal Detection -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-search text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Signal Detection</h3>
+                        <p>Detect and identify the frequency of nearby transmission sources. Useful for reconnaissance and identification of RF sources.</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <!-- Frequency Scanner -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-chart-bar text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Frequency Scanner</h3>
+                        <p>Continuously scan a configurable range of frequencies consecutively or in parallel to monitor activity across the spectrum.</p>
+                    </div>
+                    
+                    <!-- In-built Apps -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-cubes text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">In-built Applications</h3>
+                        <p>Dozens of built-in applications like real-time ADS-B scanner, GPS-Simulator, TPMS decoders, and more for specialized tasks.</p>
+                    </div>
+                    
+                    <!-- Signal Generator -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-wave-square text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Signal Generator</h3>
+                        <p>Generate customized signals and spectrum outputs for device configuration, testing, or even signal fuzzing applications.</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Custom Apps -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-code text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Custom Applications</h3>
+                        <p>Open-source hardware and software with an active community supporting custom application development. Extend functionality to meet your specific needs.</p>
+                    </div>
+                    
+                    <!-- HackRF Mode -->
+                    <div class="bg-white rounded-lg shadow-md p-5 feature-card">
+                        <div class="text-indigo-700 mb-2">
+                            <i class="fas fa-laptop-code text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">HackRF Mode</h3>
+                        <p>Direct access to the HackRF with full support for all common SDR tools like GNU Radio, GQRX, SDR#, SDR Console, Universal Radio Hacker, and more.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="applications" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Applications</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-indigo-800 mb-3">Receive Applications</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li><strong>Sniff & Capture</strong>: Sniff & capture signals for instant replay or save to SD card for analysis</li>
+                            <li><strong>ADS-B</strong>: Receive and analyze aviation signals with real-time location display</li>
+                            <li><strong>AIS</strong>: Receive and analyze marine vessel signals</li>
+                            <li><strong>AFSK</strong>: Receive, demodulate and analyze AFSK signals</li>
+                            <li><strong>Bluetooth</strong>: Sniff MAC addresses of BLE devices</li>
+                            <li><strong>NRF</strong>: Decode NRF24L01 signals, commonly used for drones</li>
+                            <li><strong>Audio</strong>: Decode WFM/NFM/AM radio transmissions</li>
+                            <li><strong>Spectrum Analyzer</strong>: Waterfall spectrum analyzer for detecting signals</li>
+                            <li><strong>Analog TV</strong>: Decode and watch analog TV signals, used on FPV drones</li>
+                            <li><strong>ERT Meters</strong>: Decode ERT Meter signals</li>
+                            <li><strong>POCSAG</strong>: Sniff and decode pager signals</li>
+                            <li><strong>Radiosonde</strong>: Sniff and decode weather station signals</li>
+                            <li><strong>TPMS</strong>: Decode Tire Pressure Monitoring System sensors</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-indigo-800 mb-3">Transmit Applications</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li><strong>ADS-B</strong>: Spoof ADS-B (Aviation) signals for testing</li>
+                            <li><strong>APRS</strong>: Transmit APRS packets for GPS, weather stations and telemetry</li>
+                            <li><strong>GPS</strong>: Spoof GPS signals</li>
+                            <li><strong>Jammer</strong>: Multi-band jamming capabilities for secure testing</li>
+                            <li><strong>Key Fob</strong>: Key-fob capture, replay and emulation for multiple models</li>
+                            <li><strong>Morse Code</strong>: Morse code transmission tool</li>
+                            <li><strong>Burger Pager</strong>: Spoof restaurant pager signals</li>
+                            <li><strong>POCSAG</strong>: Send pager signals</li>
+                            <li><strong>SSTV</strong>: Send Slow Scan Television signals</li>
+                            <li><strong>RDS</strong>: Send Radio Data System messages</li>
+                            <li><strong>OOK</strong>: Send On-Off Keying packages</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-yellow-800">Responsible Use Notice</h3>
+                            <div class="mt-2 text-sm text-yellow-700">
+                                <p>Radio communication is regulated worldwide. Unauthorized transmission may be illegal and could interfere with critical services. The HackRF and Portapack are designed for testing, analyzing, and experimenting in controlled environments. Always follow your local regulations regarding radio transmissions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Compatible Systems</h3>
+                    <p class="mb-4">The HackRF One and H4M Portapack work with a variety of software platforms:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Windows, macOS, Linux, and specific Android builds</li>
+                        <li>GNU Radio - open-source software development toolkit</li>
+                        <li>GQRX - open-source SDR receiver</li>
+                        <li>SDR# (SDR Sharp) - Windows SDR software</li>
+                        <li>SDR Console - feature-rich SDR software</li>
+                        <li>Universal Radio Hacker - wireless protocol analysis</li>
+                        <li>Many other SDR applications supporting HackRF</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="setup" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Setup Instructions</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">SD Card Setup</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Purchase a good quality microSD card (32GB or smaller recommended) from a reputable brand like SanDisk or Samsung</li>
+                        <li>Format the card as FAT32 (required for Mayhem firmware versions prior to 2.1.0)</li>
+                        <li>Download the latest firmware release from the <a href="https://github.com/portapack-mayhem/mayhem-firmware/releases" class="text-blue-600 hover:text-blue-800 underline">Mayhem GitHub releases page</a></li>
+                        <li>Extract the "Mayhem_vX.X.X_copy_to_SD_card.zip" file to your SD card</li>
+                        <li>Insert the SD card into your H4M Portapack</li>
+                    </ol>
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-blue-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-blue-700">Starting with Mayhem 2.1.0, exFAT formatted SD cards are also supported, allowing for cards larger than 32GB.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Firmware Installation</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Turn on your Portapack by sliding the power switch up</li>
+                        <li>Navigate to "Utilities" and select "Flash Utility"</li>
+                        <li>Select the file named "portapack-h1_h2-mayhem.bin" from the list</li>
+                        <li>Confirm the installation and wait for the flashing process to complete</li>
+                        <li>Your Portapack will restart with the new firmware installed</li>
+                    </ol>
+                    <p class="mt-4">Alternatively, you can use the <a href="https://hackrf.app" class="text-blue-600 hover:text-blue-800 underline">online updater tool</a> (not available on Mac) which updates both the firmware and SD card files automatically.</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Basic Configuration</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Calibrate the touch screen: Go to Settings → Calibration (hold down on the markers, don't just tap them)</li>
+                        <li>Set date and time: Go to Settings → Date & Time</li>
+                        <li>Customize user interface: Go to Settings → User Interface
+                            <ul class="list-disc pl-5 mt-2">
+                                <li>Enable "Show splash" and "Back button in menu"</li>
+                                <li>Hide unnecessary status bar icons</li>
+                                <li>Set color theme (green is popular)</li>
+                            </ul>
+                        </li>
+                        <li>Save settings: Go to Settings → P.Memory Management to save your settings to the SD card</li>
+                        <li>Set custom splash image: Place 240x304 pixel 24-bit BMP files in the "SPLASH" folder on your SD card, then use Utilities → File Manager to select one</li>
+                    </ol>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Battery and Charging</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>The H4M uses a new power design with a physical on/off switch that completely disconnects the battery</li>
+                        <li>To view battery info, tap the battery icon in the status bar</li>
+                        <li>When charging via USB, make sure the device is powered ON (switch in the up position)</li>
+                        <li>You can choose between "IC" or "Volt" battery monitoring methods - "Volt" is generally more reliable</li>
+                        <li>Try to keep the battery voltage above 3.0V for optimal battery life</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="firmware" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Firmware Updates</h2>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Mayhem Firmware</h3>
+                    <p class="mb-4">The Mayhem firmware is the most popular and feature-rich custom firmware for the HackRF Portapack. It adds numerous applications and improvements over the stock firmware.</p>
+                    
+                    <h4 class="text-lg font-semibold text-indigo-700 mb-2">Update Methods</h4>
+                    
+                    <div class="mb-4">
+                        <h5 class="font-semibold">Method 1: Direct Update (Recommended)</h5>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Download the latest release from <a href="https://github.com/portapack-mayhem/mayhem-firmware/releases" class="text-blue-600 hover:text-blue-800 underline">GitHub</a></li>
+                            <li>Extract the SD card files to your microSD card</li>
+                            <li>Insert the card into your Portapack</li>
+                            <li>Go to Utilities → Flash Utility and select the firmware file</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5 class="font-semibold">Method 2: Web Updater</h5>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Visit <a href="https://hackrf.app" class="text-blue-600 hover:text-blue-800 underline">https://hackrf.app</a></li>
+                            <li>Connect your Portapack to your computer via USB</li>
+                            <li>Follow the on-screen instructions to update</li>
+                            <li>This method automatically updates both firmware and SD card files</li>
+                        </ol>
+                        <p class="mt-2 text-sm text-gray-600">Note: This method doesn't work on macOS.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5 class="font-semibold">Method 3: DFU Mode (Recovery)</h5>
+                        <p class="mb-2">If your device won't boot or is stuck, you can use DFU mode to recover:</p>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Power off your device</li>
+                            <li>Hold the DFU button (small button on the HackRF board)</li>
+                            <li>Connect to USB while holding the button</li>
+                            <li>Use dfu-util command line tool or HackRF.app to flash the firmware</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-blue-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-blue-800">Firmware and Applications Compatibility</h3>
+                            <div class="mt-2 text-sm text-blue-700">
+                                <p>The applications on the SD card will only work with the exact firmware version they were compiled for. Always update both the firmware and SD card files together to ensure compatibility.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Mayhem 2.0/2.1 New Features</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Remote screen support via web interface</li>
+                        <li>Remote file system access</li>
+                        <li>One click firmware updates</li>
+                        <li>Offline PWA support</li>
+                        <li>exFAT SD card support (2.1.0+)</li>
+                        <li>New applications including Foxhunt and Wardriver</li>
+                        <li>UI improvements and bug fixes</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Common Firmware Issues</h3>
+                    <details class="mb-4">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">Device not booting after update</summary>
+                        <div class="mt-2 pl-4">
+                            <p>If your device doesn't boot after a firmware update:</p>
+                            <ol class="list-decimal pl-5 space-y-1 mt-2">
+                                <li>Try removing and reinserting the SD card</li>
+                                <li>Ensure your battery is charged</li>
+                                <li>If still not working, try a DFU recovery flash</li>
+                            </ol>
+                        </div>
+                    </details>
+                    <details class="mb-4">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">Applications not appearing or crashing</summary>
+                        <div class="mt-2 pl-4">
+                            <p>If applications are missing or causing crashes:</p>
+                            <ol class="list-decimal pl-5 space-y-1 mt-2">
+                                <li>Make sure you're using the SD card files that match your firmware version</li>
+                                <li>Try reformatting your SD card and copying the files fresh</li>
+                                <li>Check that your SD card is not counterfeit</li>
+                            </ol>
+                        </div>
+                    </details>
+                    <details class="mb-4">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">SD card not recognized</summary>
+                        <div class="mt-2 pl-4">
+                            <p>If your SD card is not being recognized:</p>
+                            <ol class="list-decimal pl-5 space-y-1 mt-2">
+                                <li>Ensure the card is properly formatted (FAT32 for older firmware, FAT32 or exFAT for 2.1.0+)</li>
+                                <li>Try a different, known good SD card</li>
+                                <li>Check if the SD card slot is damaged or has debris</li>
+                            </ol>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <section id="tutorials" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Tutorials</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Getting Started with Basic Applications</h3>
+                    
+                    <div class="mb-6 bg-white rounded-lg shadow-md p-5">
+                        <h4 class="text-lg font-semibold text-indigo-700 mb-2">Audio Application</h4>
+                        <p class="mb-3">The Audio application allows you to listen to radio signals across the HackRF's frequency range:</p>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>From the main menu, go to Receive → Audio</li>
+                            <li>Select the modulation type in the top left (WFM for FM radio, NFM for narrow FM, AM for amplitude modulation)</li>
+                            <li>If listening to FM broadcast stations, select WFM and set frequency to 88-108 MHz</li>
+                            <li>Adjust the LNA, VGA, and AMP settings to optimize reception</li>
+                            <li>Set volume and squelch levels as needed</li>
+                            <li>Use the tuning knob to scan through frequencies or directly enter a known frequency</li>
+                        </ol>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-600"><strong>Tip:</strong> For FM broadcast stations, try 88-108 MHz. For ham radio, try 144-148 MHz with NFM. For shortwave, try 5-30 MHz with AM mode.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6 bg-white rounded-lg shadow-md p-5">
+                        <h4 class="text-lg font-semibold text-indigo-700 mb-2">Looking Glass Application</h4>
+                        <p class="mb-3">Looking Glass is a spectrum analyzer showing a waterfall display of radio activity:</p>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>From the main menu, go to Receive → Looking Glass</li>
+                            <li>Select a frequency range preset or set custom min/max frequencies</li>
+                            <li>Adjust LNA and VGA gain to see signals clearly</li>
+                            <li>Active signals will appear as bright lines on the waterfall display</li>
+                            <li>Use the marker to identify the exact frequency of a signal</li>
+                            <li>Press the center button to open the Audio app on the selected frequency</li>
+                        </ol>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-600"><strong>Note:</strong> The bright vertical line in the center is a "DC spike" - this is normal and not an actual signal.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6 bg-white rounded-lg shadow-md p-5">
+                        <h4 class="text-lg font-semibold text-indigo-700 mb-2">Signal Capture and Replay</h4>
+                        <p class="mb-3">Capture and replay RF signals like remote controls:</p>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>First use the Search app to find the signal's frequency:
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Go to Receive → Search</li>
+                                    <li>Set the frequency range (e.g., 433-435 MHz for many remotes)</li>
+                                    <li>Press the remote button and note the detected frequency</li>
+                                </ul>
+                            </li>
+                            <li>Capture the signal:
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Go to Receive → Capture</li>
+                                    <li>Enter the frequency found earlier</li>
+                                    <li>Click the red record button and activate the remote</li>
+                                    <li>Stop recording when complete</li>
+                                </ul>
+                            </li>
+                            <li>Replay the signal:
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Go to Transmit → Replay</li>
+                                    <li>Load your recording</li>
+                                    <li>Press the green arrow to transmit</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <div class="mt-4 text-sm text-red-600">
+                            <strong>Important:</strong> Always use the appropriate antenna for the frequency you're transmitting on to avoid damaging your device.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Advanced Applications</h3>
+                    
+                    <div class="mb-6 bg-white rounded-lg shadow-md p-5">
+                        <h4 class="text-lg font-semibold text-indigo-700 mb-2">ADS-B Aircraft Tracking</h4>
+                        <p class="mb-3">Track aircraft in your vicinity by receiving their ADS-B transmissions:</p>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Go to Receive → ADS-B</li>
+                            <li>Adjust LNA and VGA gain settings (increase for better range, but avoid saturation)</li>
+                            <li>The application will automatically tune to 1090 MHz and decode aircraft signals</li>
+                            <li>Aircraft will appear in the list with their callsign, altitude, and other information</li>
+                            <li>Select an aircraft to see more details</li>
+                            <li>Switch to Map view to see aircraft positions plotted on the map</li>
+                        </ol>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-600"><strong>Tip:</strong> For best results, use an antenna with good 1090 MHz reception and position it with clear view of the sky.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6 bg-white rounded-lg shadow-md p-5">
+                        <h4 class="text-lg font-semibold text-indigo-700 mb-2">Radio Signal Analysis</h4>
+                        <p class="mb-3">Analyze signals from keyfobs, wireless sensors, and other devices:</p>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>For key fobs and remotes:
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Go to Receive → Capture or Receive → Search to find the frequency</li>
+                                    <li>Most operate in common ISM bands (315, 433, 868, or 915 MHz)</li>
+                                    <li>Use Spectrum view to see the signal pattern</li>
+                                </ul>
+                            </li>
+                            <li>For TPMS (Tire Pressure Monitoring System):
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Go to Receive → TPMS</li>
+                                    <li>The app automatically scans common TPMS frequencies</li>
+                                    <li>When near vehicles, it will display tire pressure and temperature data</li>
+                                </ul>
+                            </li>
+                            <li>For digital signals:
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Use the appropriate decoder app (NRF, AFSK, etc.)</li>
+                                    <li>Adjust the frequency and gain settings</li>
+                                    <li>The app will attempt to decode and display the data</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Custom Applications Development</h3>
+                    <p class="mb-4">For advanced users interested in developing custom applications:</p>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Clone the Mayhem firmware repository:
+                            <div class="code-block mt-2 mb-2">
+                                git clone https://github.com/portapack-mayhem/mayhem-firmware.git
+                            </div>
+                        </li>
+                        <li>Set up the development environment by following the instructions in the documentation</li>
+                        <li>Study existing applications in the /firmware/application folder</li>
+                        <li>Create your application using C++ and the provided API</li>
+                        <li>Test your application using the provided simulator</li>
+                        <li>Compile and flash to your device</li>
+                    </ol>
+                    <p class="mt-4">For more detailed instructions, refer to the <a href="https://github.com/portapack-mayhem/mayhem-firmware/wiki/How-to-collaborate" class="text-blue-600 hover:text-blue-800 underline">development guide</a> in the Mayhem GitHub wiki.</p>
+                </div>
+            </section>
+
+            <section id="faq" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Frequently Asked Questions</h2>
+                
+                <div class="space-y-6">
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">What's the difference between HackRF One and the H4M Portapack?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>The HackRF One is a standalone SDR board that requires a computer to operate. The H4M Portapack is an add-on that attaches to the HackRF One, providing an LCD screen, controls, and battery power, allowing it to function as a portable standalone device without needing a computer.</p>
+                            <p class="mt-2">The H4M specifically is the latest version of the Portapack with several improvements over previous versions including a better screen, power management, GPIO port, and more.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">What is the range of the HackRF/Portapack?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>The reception range depends on many factors:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>The frequency being monitored</li>
+                                <li>The type and quality of the antenna being used</li>
+                                <li>Environmental conditions and obstructions</li>
+                                <li>The power level of the transmitting device</li>
+                            </ul>
+                            <p class="mt-2">As a general rule, VHF/UHF signals (above 30 MHz) are primarily line-of-sight, so reception is limited to about 30-40 km maximum in open terrain. HF signals (below 30 MHz) can travel much further due to ionospheric reflection.</p>
+                            <p class="mt-2">When transmitting, the HackRF has relatively low power output (10-20 mW), limiting its effective range to short distances.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">Is it legal to use the HackRF/Portapack?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>The HackRF and Portapack are legal to own and use in most countries. However, how you use them is subject to radio regulations:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>Receiving signals is generally legal (with some exceptions for encrypted or protected services)</li>
+                                <li>Transmitting without proper authorization is illegal in most jurisdictions</li>
+                                <li>Jamming or interfering with any communications is illegal almost everywhere</li>
+                                <li>Reproducing certain protected signals (like key fobs) may be illegal in some areas</li>
+                            </ul>
+                            <p class="mt-2">Always research and follow your local radio regulations. In the US, this would be FCC regulations; other countries have their own equivalent agencies.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">Which antennas should I use with my HackRF?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>For best performance, use antennas designed for the specific frequency range you're interested in:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>The telescopic antenna can work for general reception but is not ideal</li>
+                                <li>For 2.4 GHz (Wi-Fi, Bluetooth): Use the included blade antenna</li>
+                                <li>For cellular frequencies: Use the GSM/3G/4G antenna</li>
+                                <li>For HF bands (below 30 MHz): Use a longer wire antenna (5+ meters)</li>
+                                <li>For specific applications like ADS-B or TPMS: Consider purpose-built antennas</li>
+                            </ul>
+                            <p class="mt-2 text-red-600"><strong>Important:</strong> When transmitting, always use an antenna designed for the frequency you're transmitting on to avoid damaging the HackRF.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">How long does the battery last on the H4M Portapack?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>Battery life depends on your usage patterns:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>Typical usage (mostly receiving): 3-4 hours</li>
+                                <li>Heavy transmission use: 1.5-2.5 hours</li>
+                                <li>Standby with display on: 4-5 hours</li>
+                            </ul>
+                            <p class="mt-2">To maximize battery life:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>Lower the screen brightness</li>
+                                <li>Avoid constant transmission</li>
+                                <li>Turn off the device when not in use (the H4M's power switch completely cuts power)</li>
+                                <li>Keep the battery charged above 3.0V to maintain battery health</li>
+                            </ul>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">Can the HackRF/Portapack intercept cell phone calls or text messages?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>Modern cellular communications use advanced encryption and digital protocols that the HackRF cannot easily decode. While it can receive the raw signals in cellular frequency bands, it doesn't have the capability to:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>Decode encrypted cellular communications</li>
+                                <li>Intercept calls or messages from modern networks (4G/5G)</li>
+                                <li>Clone or spoof modern cellular devices</li>
+                            </ul>
+                            <p class="mt-2">Additionally, attempting to intercept cellular communications is illegal in most jurisdictions and can result in serious penalties.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">My HackRF isn't detecting any signals. What's wrong?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>Several factors can cause poor signal reception:</p>
+                            <ol class="list-decimal pl-5 mt-2 space-y-1">
+                                <li>Incorrect frequency - Make sure you're on the right frequency band</li>
+                                <li>Gain settings too low - Try increasing LNA and VGA gain</li>
+                                <li>Improper antenna - Use an antenna appropriate for the frequency</li>
+                                <li>Environmental obstacles - Move to a better location with fewer obstructions</li>
+                                <li>Damaged LNA - The 14dB LNA on HackRF can be damaged by static electricity; try toggling it on/off</li>
+                                <li>Firmware issues - Update to the latest firmware</li>
+                            </ol>
+                            <p class="mt-2">For RF sensitivity testing, try tuning to local FM broadcast stations (88-108 MHz) as a first test, as these are typically strong enough to receive even with non-optimal setups.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">Do I need a HAM radio license to use the HackRF?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>For receiving only, you generally don't need any license. For transmitting:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>A HAM (amateur radio) license is required to transmit on amateur radio frequencies</li>
+                                <li>Some frequencies (ISM bands) allow unlicensed transmission with specific power limitations</li>
+                                <li>Other frequencies require specific licenses or are restricted entirely</li>
+                            </ul>
+                            <p class="mt-2">Getting a HAM radio license is recommended if you plan to do any significant transmitting with your HackRF. The license exam teaches important concepts about responsible radio use and regulations.</p>
+                        </div>
+                    </details>
+                    
+                    <details class="bg-white rounded-lg shadow-md p-5">
+                        <summary class="font-semibold cursor-pointer text-indigo-700">How does the H4M compare to previous Portapack versions?</summary>
+                        <div class="mt-4 pl-4">
+                            <p>The H4M offers several significant improvements over previous Portapack versions (like the H2):</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>Proper power on/off switch that completely cuts power (eliminates battery drain when off)</li>
+                                <li>Matte screen for better visibility outdoors</li>
+                                <li>Advanced battery management system with detailed battery information</li>
+                                <li>Faster charging via USB-C</li>
+                                <li>Built-in microphone with toggle switch between internal and external mic</li>
+                                <li>Automatic audio switching between headphones and speaker</li>
+                                <li>Redesigned navigation wheel that's more durable</li>
+                                <li>Added GPIO port for custom add-ons and extensions</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <section id="resources" class="mb-10">
+                <h2 class="text-2xl font-bold text-indigo-900 section-header mb-4">Resources</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-indigo-800 mb-3">Official Links</h3>
+                        <ul class="space-y-2">
+                            <li><i class="fab fa-github text-gray-700 mr-2"></i><a href="https://github.com/portapack-mayhem/mayhem-firmware" class="text-blue-600 hover:text-blue-800">Portapack Mayhem Firmware GitHub</a></li>
+                            <li><i class="fas fa-globe text-gray-700 mr-2"></i><a href="https://opensourcesdrlab.com" class="text-blue-600 hover:text-blue-800">OpenSourceSDR Lab (H4M Manufacturer)</a></li>
+                            <li><i class="fas fa-shopping-cart text-gray-700 mr-2"></i><a href="https://lab401.com/products/portapack-h4m" class="text-blue-600 hover:text-blue-800">Lab401 (H4M Retailer)</a></li>
+                            <li><i class="fas fa-book text-gray-700 mr-2"></i><a href="https://github.com/portapack-mayhem/mayhem-firmware/wiki" class="text-blue-600 hover:text-blue-800">Mayhem Firmware Wiki</a></li>
+                            <li><i class="fas fa-sync text-gray-700 mr-2"></i><a href="https://hackrf.app" class="text-blue-600 hover:text-blue-800">HackRF.app Web Updater</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-indigo-800 mb-3">Community</h3>
+                        <ul class="space-y-2">
+                            <li><i class="fab fa-discord text-gray-700 mr-2"></i><a href="https://discord.gg/tuwVMv3" class="text-blue-600 hover:text-blue-800">Mayhem Portapack Discord</a></li>
+                            <li><i class="fab fa-telegram text-gray-700 mr-2"></i><a href="https://t.me/OpenSourceSDRLab" class="text-blue-600 hover:text-blue-800">OpenSourceSDR Lab Telegram Group</a></li>
+                            <li><i class="fab fa-youtube text-gray-700 mr-2"></i><a href="https://www.youtube.com/@Jeremiah.o.A.T" class="text-blue-600 hover:text-blue-800">Jeremiah.o.A.T YouTube Channel</a></li>
+                            <li><i class="fab fa-youtube text-gray-700 mr-2"></i><a href="https://www.youtube.com/@sn0ren" class="text-blue-600 hover:text-blue-800">sn0ren YouTube Channel</a></li>
+                            <li><i class="fab fa-reddit text-gray-700 mr-2"></i><a href="https://www.reddit.com/r/hackrf/" class="text-blue-600 hover:text-blue-800">r/hackrf Subreddit</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-3">Recommended Tutorials</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border rounded p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+                            <h4 class="font-semibold">HackRF Portapack H4M Beginners Guide</h4>
+                            <p class="text-sm text-gray-600 mb-2">by sn0ren</p>
+                            <p class="text-sm">A comprehensive beginner guide covering basic setup and common applications.</p>
+                            <a href="https://www.youtube.com/watch?v=n7N7G_9tj9w" class="text-blue-600 hover:text-blue-800 text-sm mt-2 inline-block">Watch Video <i class="fas fa-external-link-alt text-xs"></i></a>
+                        </div>
+                        <div class="border rounded p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+                            <h4 class="font-semibold">HackRF Portapack H4M - Getting Started Guide</h4>
+                            <p class="text-sm text-gray-600 mb-2">by RocketGod</p>
+                            <p class="text-sm">Hardware overview and basic setup instructions for the H4M.</p>
+                            <a href="https://www.youtube.com/watch?v=wzP0zWi85SI" class="text-blue-600 hover:text-blue-800 text-sm mt-2 inline-block">Watch Video <i class="fas fa-external-link-alt text-xs"></i></a>
+                        </div>
+                        <div class="border rounded p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+                            <h4 class="font-semibold">Mayhem 2.1.0 for Portapack H4M or H2</h4>
+                            <p class="text-sm text-gray-600 mb-2">by Jeremiah of All Trades</p>
+                            <p class="text-sm">Overview of the latest Mayhem firmware features and update process.</p>
+                            <a href="https://www.youtube.com/watch?v=RsX2jeilEYc" class="text-blue-600 hover:text-blue-800 text-sm mt-2 inline-block">Watch Video <i class="fas fa-external-link-alt text-xs"></i></a>
+                        </div>
+                        <div class="border rounded p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+                            <h4 class="font-semibold">PortaPack H2 Hack RF One Antennas</h4>
+                            <p class="text-sm text-gray-600 mb-2">by Jeremiah of All Trades</p>
+                            <p class="text-sm">Discussion of antenna options for different frequency ranges and applications.</p>
+                            <a href="https://www.youtube.com/watch?v=MGLDWwj0EvY" class="text-blue-600 hover:text-blue-800 text-sm mt-2 inline-block">Watch Video <i class="fas fa-external-link-alt text-xs"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="fixed bottom-0 right-0 w-full md:w-96 chatbot-container shadow-lg hidden z-30">
+        <div class="bg-indigo-700 text-white p-4 flex justify-between items-center">
+            <h3 class="font-bold">HackRF & Portapack Assistant</h3>
+            <button id="chatbot-close" class="text-white hover:text-gray-200">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="bg-white p-4 h-80 overflow-y-auto flex flex-col space-y-4">
+            <div class="chatbot-message bot-message p-3 self-start">
+                <p>Hello! I'm your HackRF & Portapack assistant. How can I help you today?</p>
+            </div>
+        </div>
+        <div class="bg-white border-t p-4">
+            <div class="flex">
+                <input id="chat-input" type="text" class="flex-grow border rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Ask a question...">
+                <button id="chat-submit" class="bg-indigo-700 text-white px-4 py-2 rounded-r hover:bg-indigo-600 transition">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="mt-2 text-xs text-gray-500">
+                <p>Try asking: "What is the frequency range of HackRF?" or "How do I update firmware?"</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">STEAM-Labz HackRF & H4M Portapack</h3>
+                    <p class="text-gray-400">Comprehensive knowledge base for software-defined radio exploration</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/portapack-mayhem/mayhem-firmware" class="text-gray-400 hover:text-white"><i class="fab fa-github text-xl"></i></a>
+                        <a href="https://discord.gg/tuwVMv3" class="text-gray-400 hover:text-white"><i class="fab fa-discord text-xl"></i></a>
+                        <a href="https://www.youtube.com/@Jeremiah.o.A.T" class="text-gray-400 hover:text-white"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+                <p>This knowledge base is provided for educational purposes only. Always use radio equipment responsibly and in accordance with local regulations.</p>
+                <p class="mt-2">© 2025 STEAM-Labz | HackRF One developed by Great Scott Gadgets | Mayhem Firmware by the Portapack-Mayhem team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Table of Contents Generator
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocContainer = document.getElementById('toc-container');
+            const sections = document.querySelectorAll('section[id]');
+            
+            sections.forEach(section => {
+                const heading = section.querySelector('h2');
+                if (heading) {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `#${section.id}`;
+                    a.textContent = heading.textContent;
+                    a.className = 'sidebar-link block py-2 px-3 text-gray-700 hover:text-indigo-700';
+                    li.appendChild(a);
+                    tocContainer.appendChild(li);
+                    
+                    a.addEventListener('click', function(e) {
+                        document.getElementById('toc-sidebar').classList.add('hidden');
+                    });
+                }
+            });
+            
+            // Sidebar Toggle
+            document.getElementById('toc-button').addEventListener('click', function() {
+                document.getElementById('toc-sidebar').classList.toggle('hidden');
+            });
+            
+            document.getElementById('toc-close').addEventListener('click', function() {
+                document.getElementById('toc-sidebar').classList.add('hidden');
+            });
+            
+            // Chatbot Toggle
+            document.getElementById('chatbot-toggle').addEventListener('click', function() {
+                document.getElementById('chatbot').classList.toggle('hidden');
+            });
+            
+            document.getElementById('chatbot-close').addEventListener('click', function() {
+                document.getElementById('chatbot').classList.add('hidden');
+            });
+            
+            // Chatbot Functionality
+            const chatMessages = document.getElementById('chat-messages');
+            const chatInput = document.getElementById('chat-input');
+            const chatSubmit = document.getElementById('chat-submit');
+            
+            // Knowledge Base for the Chatbot
+            const knowledgeBase = {
+                // General questions
+                "what is hackrf": "HackRF One is an open-source hardware platform that can be used as a USB peripheral or programmed for stand-alone operation. It's capable of transmission or reception of radio signals from 1 MHz to 6 GHz.",
+                "what is portapack": "The Portapack is an add-on for the HackRF One that adds a display, controls, and battery power, allowing it to function as a standalone portable device without requiring a computer.",
+                "what is h4m": "The H4M is the latest version of the Portapack with several improvements including a matte screen, proper power switch, improved battery management, USB-C charging, GPIO port, built-in microphone with toggle, and automatic audio switching.",
+                "difference between hackrf and portapack": "The HackRF One is the core SDR (Software Defined Radio) board that requires a computer to operate. The Portapack is an add-on that attaches to the HackRF, adding a screen, controls, and battery to make it a standalone portable device.",
+                
+                // Specifications
+                "frequency range": "The HackRF One operates from 1 MHz to 6 GHz, covering a wide range of radio frequencies from AM broadcast bands to Wi-Fi and beyond.",
+                "hackrf specifications": "The HackRF One is a half-duplex transceiver with 1 MHz to 6 GHz frequency range, up to 20 million samples per second, 8-bit quadrature samples, USB 2.0 interface, and SMA antenna connector.",
+                "portapack specifications": "The H4M Portapack features a 3.2 inch 240x320 matte LCD touch screen, arrow keys, rotary wheel, built-in speaker, 3.5mm audio jack, microSD card slot, rechargeable battery, and GPIO port.",
+                "h4m improvements": "The H4M Portapack improves on previous versions with: single power on/off switch, advanced battery management, matte screen, redesigned knob, GPIO port, faster USB-C charging, built-in microphone with toggle, and automatic audio switching.",
+                
+                // Setup and Usage
+                "sd card setup": "For SD card setup: 1) Get a good quality microSD card (32GB or smaller) 2) Format it as FAT32 3) Download the latest firmware files from GitHub 4) Extract them to the SD card 5) Insert the card into your Portapack.",
+                "firmware update": "To update firmware: 1) Download the latest release from GitHub 2) Extract files to your SD card 3) Insert the SD card 4) Go to Utilities → Flash Utility 5) Select the firmware file. Alternatively, use the web updater at hackrf.app",
+                "battery life": "Battery life varies by usage: 3-4 hours for typical receiving, 1.5-2.5 hours with heavy transmission, 4-5 hours on standby. To maximize battery life, lower screen brightness, avoid constant transmission, and turn off when not in use.",
+                "antennas": "Use antennas designed for specific frequency ranges: telescopic antenna for general use, blade antenna for 2.4 GHz, GSM antenna for cellular bands, and longer wire antennas (5+ meters) for HF bands. When transmitting, always use an antenna designed for the specific frequency to avoid damaging your device.",
+                
+                // Applications
+                "what can i do": "With your HackRF and Portapack, you can: receive and analyze radio signals, capture and replay signals, track aircraft (ADS-B) and ships (AIS), decode various digital protocols, listen to radio broadcasts, analyze spectrum usage, and with proper licensing, transmit your own signals for testing and experimentation.",
+                "receive applications": "Receive applications include: Audio (WFM/NFM/AM), Looking Glass (spectrum analyzer), ADS-B (aircraft tracking), AIS (ship tracking), AFSK, Bluetooth scanner, NRF decoder, Analog TV, ERT Meters, POCSAG (pager decoder), Radiosonde, and TPMS decoder.",
+                "transmit applications": "Transmit applications include: ADS-B, APRS, GPS spoofing, Jammer, Key Fob capture/replay, Morse Code, Burger Pager, POCSAG, SSTV, RDS, and OOK. Remember to follow regulations and only transmit where legally permitted.",
+                "signal capture": "To capture signals: 1) Use Search app to find the frequency 2) Go to Receive → Capture 3) Set the frequency 4) Click record and activate the device 5) Stop recording. You can replay captured signals from the Transmit → Replay menu.",
+                
+                // Common Issues
+                "no signals": "If you're not detecting signals: 1) Check you're on the correct frequency 2) Increase LNA and VGA gain settings 3) Use an appropriate antenna 4) Move to a better location 5) Check if the LNA is damaged (try toggling it) 6) Update to the latest firmware.",
+                "amp vs lna": "The 'AMP' setting toggles a fixed 14dB LNA amplifier on the HackRF board. This component can be easily damaged by static electricity or other voltage on the antenna port. If signals disappear when enabling AMP, it might be damaged. The LNA and VGA settings provide adjustable gain that's separate from the AMP.",
+                "legality": "Owning and receiving with HackRF is generally legal, but transmitting without proper authorization is illegal in most jurisdictions. Jamming is illegal almost everywhere. Always follow your local radio regulations and consider getting an amateur radio license if you plan to transmit.",
+                
+                // Specific Features
+                "audio app": "The Audio app allows you to listen to radio signals. Set the modulation type (WFM for FM radio, NFM for narrow FM, AM for amplitude modulation), adjust the frequency, and set gain levels. For FM broadcast stations, use WFM and 88-108 MHz.",
+                "looking glass": "Looking Glass is a spectrum analyzer that shows a waterfall display of radio activity. Set your frequency range, adjust gain, and watch for active signals appearing as bright lines. Use the marker to identify frequencies and press the center button to open that frequency in the Audio app.",
+                "gps spoofing": "The GPS app can simulate GPS signals, but should only be used in controlled environments for testing purposes. Interfering with real GPS systems is illegal in most jurisdictions.",
+                "hackrf mode": "You still have direct access to the HackRF through its USB port, allowing you to use it with computer-based SDR software like GNU Radio, GQRX, SDR#, etc. This gives you access to more advanced processing capabilities."
+            };
+            
+            function addMessage(message, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chatbot-message ${isUser ? 'user-message self-end' : 'bot-message self-start'} p-3`;
+                messageDiv.innerHTML = `<p>${message}</p>`;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function getResponse(question) {
+                question = question.toLowerCase();
+                let bestMatch = '';
+                let highestScore = 0;
+                
+                for (const key in knowledgeBase) {
+                    // Simple matching algorithm - count how many words from the key appear in the question
+                    const keyWords = key.toLowerCase().split(' ');
+                    let score = 0;
+                    
+                    for (const word of keyWords) {
+                        if (question.includes(word) && word.length > 2) {
+                            score += 1;
+                        }
+                    }
+                    
+                    // Boost score for exact matches
+                    if (question.includes(key.toLowerCase())) {
+                        score += 3;
+                    }
+                    
+                    if (score > highestScore) {
+                        highestScore = score;
+                        bestMatch = key;
+                    }
+                }
+                
+                if (highestScore > 0) {
+                    return knowledgeBase[bestMatch];
+                }
+                
+                // Default response if no match
+                return "I'm not sure about that. You might find the answer in the knowledge base above, or try asking in a different way.";
+            }
+            
+            function handleChat() {
+                const message = chatInput.value.trim();
+                if (message === '') return;
+                
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                setTimeout(() => {
+                    const response = getResponse(message);
+                    addMessage(response, false);
+                }, 500);
+            }
+            
+            chatSubmit.addEventListener('click', handleChat);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleChat();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDu3BsVkdmgPyOJXTm2BxxpGJGmeNd32BNlOCWFKB%2Bg5j2zGK3Hr9QM%2F7i3m0BCEem7r236I8uMCwup%2Fv2XyLUEWcSDlboCvP7mlUAO%2Fh1o5%2BSx5OzGXRyyiFKvsSmc8QYZRmml8%2BrNLa60pjh5ttLou%2FenA09mxbXc4YWAPUZ%2FLLrL9Ef%2FCVNvQrtLT1qhXbZ0Y%2FrUHy%2BMcNvrkRFJGUzByEMIGglgM7FaDt7fHLu1XSfKom3getRMHsecpgb39GK1SeEgnPp1D%2FtUEQjUpAYIadyKhceXj5nNHYA75BERWOBbTlaMZ7TKwHJMdfC4Zuemwm8bx64L139Sd%2FQRGeRSDVocKeEfrxXlX0Qxx6OJXAYZTrr8IaFRr7OvLgn9KZMmMXLKCdMdTuF8NT82YufUkeX0BcL9XF%2BErbPI3B8GiVZ5flKhBegU9s%2Fow4Fbn%2BIBTT13UKAQHX%2BN2d79Tfel3t%2FuwFQLnbLCs00%2FCEnT5hMerZp%2FfVD9RZPuU4cppU7MGJouZ3oaJGmUjw25OWxpLV%2FYAK%2F6zchqBElNggTQai3WvLZ%2B%2F2jDCVpSB1WFA%2B1QkyS2tSUeJaExZtVghoDZbTOAkBJDCTO5w621dZ0SQu";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDu3BsVkdmgPyOJXTm2BxxpGJGmeNd32BNlOCWFKB+g5j2zGK3Hr9QM/7i3m0BCEem7r236I8uMCwup/v2XyLUEWcSDlboCvP7mlUAO/h1o5+Sx5OzGXRyyiFKvsSmc8QYZRmml8+rNLa60pjh5ttLou/enA09mxbXc4YWAPUZ/LLrL9Ef/CVNvQrtLT1qhXbZ0Y/rUHy+McNvrkRFJGUzByEMIGglgM7FaDt7fHLu1XSfKom3getRMHsecpgb39GK1SeEgnPp1D/tUEQjUpAYIadyKhceXj5nNHYA75BERWOBbTlaMZ7TKwHJMdfC4Zuemwm8bx64L139Sd/QRGeRSDVocKeEfrxXlX0Qxx6OJXAYZTrr8IaFRr7OvLgn9KZMmMXLKCdMdTuF8NT82YufUkeX0BcL9XF+ErbPI3B8GiVZ5flKhBegU9s/ow4Fbn+IBTT13UKAQHX+N2d79Tfel3t/uwFQLnbLCs00/CEnT5hMerZp/fVD9RZPuU4cppU7MGJouZ3oaJGmUjw25OWxpLV/YAK/6zchqBElNggTQai3WvLZ+/2jDCVpSB1WFA+1QkyS2tSUeJaExZtVghoDZbTOAkBJDCTO5w621dZ0SQu";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
